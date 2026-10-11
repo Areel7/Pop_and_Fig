@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/*
+ * Runtime theme values (set from Admin Settings by ThemeManager) live in --pf-* variables.
+ * Tailwind utilities reference them through @theme inline, so the UI stays Tailwind-only while
+ * colors and fonts can change without a rebuild.
+ */
+:root {
+  --pf-primary: #111111;
+  --pf-primary-contrast: #ffffff;
+  --pf-secondary: #f5f1eb;
+  --pf-accent: #d4a373;
+  --pf-accent-contrast: #111111;
+  --pf-background: #ffffff;
+  --pf-text: #111111;
+  --pf-button: #111111;
+  --pf-button-text: #ffffff;
+  --pf-font-heading: "Inter";
+  --pf-font-body: "Inter";
+  --pf-font-button: "Inter";
+}
+
+@theme inline {
+  --color-primary: var(--pf-primary);
+  --color-on-primary: var(--pf-primary-contrast);
+  --color-secondary: var(--pf-secondary);
+  --color-accent: var(--pf-accent);
+  --color-on-accent: var(--pf-accent-contrast);
+  --color-background: var(--pf-background);
+  --color-foreground: var(--pf-text);
+  --color-button: var(--pf-button);
+  --color-on-button: var(--pf-button-text);
+
+  --font-sans: var(--pf-font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--pf-font-heading), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-button: var(--pf-font-button), ui-sans-serif, system-ui, sans-serif;
+  --font-admin: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@theme {
+  --breakpoint-xs: 30rem;
+  --animate-fade-in: fade-in 0.25s ease-out;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out;
+  --animate-slide-in-left: slide-in-left 0.3s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-in-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-in-left {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-heading;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--pf-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* react-toastify: align toasts with the brand. */
+:root {
+  --toastify-font-family: var(--pf-font-body), ui-sans-serif, system-ui, sans-serif;
+  --toastify-color-success: #2f7d4f;
+  --toastify-color-error: #b42318;
+  --toastify-color-progress-light: var(--pf-accent);
+}
